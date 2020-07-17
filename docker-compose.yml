@@ -1,0 +1,89 @@
+version: "2"
+networks:
+    nasph-network:
+        external: true
+services:
+    external-LB:
+        # The official v2 Traefik docker image
+        image: traefik:v2.2
+        networks:
+            - nasph-network
+        command:
+            - "--api=true"
+            - "--api.insecure=true"
+            - "--api.dashboard=true"
+            - "--ping"
+            - "--providers.docker=true"
+            #- "--providers.docker.endpoint=unix:///var/run/docker.sock"
+            #- "--providers.docker.network=traefik-public"
+            #- "--providers.docker.swarmMode=true"
+            - "--entrypoints.web.address=:80"
+        ports:
+            # The HTTP port
+            - "80:80"
+            # The Web UI (enabled by --api.insecure=true)
+            - "8080:8080"
+        volumes:
+            # So that Traefik can listen to the Docker events
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    api-gateway:
+        image: nasph/krakend
+        networks:
+            - nasph-network
+        depends_on:
+            - "external-LB"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.frontend.rule=Host:localhost"
+            - "traefik.port=80"
+            #- "traefik.docker.network=nasph-network"
+        volumes:
+            - ./krakend:/etc/krakend/
+    springboot-ms:
+        # A container that exposes an API to show its IP address
+        image: nasph/springboot-microservice
+        networks:
+            - nasph-network
+        labels:
+            - "traefik.http.routers.spring.rule=Host(`spring.localhost`)"
+            #- "traefik.docker.network=traefik-public"
+            - "traefik.docker.network=nasph-network"
+            - "traefik.port=80"
+        depends_on:
+            - "api-gateway"
+        expose:
+            - "7780"
+            #docker-compose up -d --scale spperformer=2
+    micronaut-sp:
+        # A container that exposes an API to show its IP address
+        image: nasph/micronaut-microservice
+        networks:
+            - nasph-network
+        depends_on:
+            - "api-gateway"
+        labels:
+            - "traefik.http.routers.micronaut.rule=Host(`micronaut.localhost`)"
+            #- "traefik.docker.network=traefik-public"
+            - "traefik.docker.network=nasph-network"
+            - "traefik.port=80"
+        expose:
+            - "7980"
+    dotnet-micro:
+        # A container that exposes an API to show its IP address
+        image: nasph/dotnetcore-microservice
+        networks:
+            - nasph-network
+        depends_on:
+            - "api-gateway"
+        labels:
+            - "traefik.http.routers.dotnet.rule=Host(`dotnet.localhost`)"
+            - "traefik.port=80"
+            - "traefik.docker.network=nasph-network"
+        #- "traefik.docker.network=traefik-public"
+        expose:
+            - "5000"
+        #.netcontainer: skalena/dotnetcore-full
+#docker-compose up -d --scale spperformer=2
+
+#docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m image docker-compose.yml
