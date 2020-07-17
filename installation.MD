@@ -96,7 +96,7 @@ Let's to create the docker compose file, follow the instructions bellow:
 * In the terminal window, please execute the following command:
 
 ```
-docker-compose run 
+docker-compose up 
 ```
 On that moment, your machine will connect to the Docker Hub and you will download and execute our official Docker Images that will boot the nasph for you. According to your internet speed, it can take a few minutes, don't worry, the Docker has a very responsive command line, and you will be able to see how the things are progressing. 
 
