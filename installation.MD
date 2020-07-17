@@ -42,3 +42,5 @@ The above docker command will execute as a service the portainer into your Docke
 
 Deeper details about Docker are beyond the scope of that Quickstart, but we can notice that in the case, Docker had not this image locally, had pulled from Docker Hub and executed into our Host.
 
+![nasph swarm console / portsiner ](https://github.com/nasph-io/quickstart/raw/master/nasph_swarm.jpg)
+
