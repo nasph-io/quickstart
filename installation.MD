@@ -58,7 +58,7 @@ We might be able to have different networks and communications between our micro
 For this basic scenario, let's create a simple bridge network called nasph_network:
 
 ```
-docker network create -d bridge nasph-network
+docker network create nasph-network
 ```
 
 ## Creating the API Gateway Cluster Environment
