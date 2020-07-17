@@ -44,3 +44,9 @@ Deeper details about Docker are beyond the scope of that Quickstart, but we can 
 
 ![nasph swarm console / portainer ](https://github.com/nasph-io/quickstart/raw/master/nasph_swarm_home.jpg)
 
+# nasph API Orchestrator
+
+Nasph combines a super reliable load-balancer/reverse proxy and a blazing fast API Gateway, running in a very smooth and lightweight architecture. The technologies that nasph is using are 100% opensource and built using Go Language, which promotes and incredible performance, at the same time, extremely easy to extend.
+
+We will run this entire stack in a total auto-scalable way using just regular docker (Swarm). We are planning to use Kubernetes in the future, but there are a lot of other solutions in that path, we do belive that nasph can be as powerful as some of those solutions, but running a much easier way, using the tools that you love. 
+
