@@ -78,8 +78,21 @@ Let's to create the docker compose file, follow the instructions bellow:
 
 * Go to the terminal / console 
 * Create a new folder called nasph-quickstart 
-* Inside the created folder, create a file called docker-compose.yml , use the text editor of your preference. 
+* inside that created folder, create a sub-folder called: krakend , and inside this subfolder create a file called: krakend.json witht the following content: https://raw.githubusercontent.com/nasph-io/quickstart/master/krakend.json
+* Inside the folder nasph-quickstart, create a file called docker-compose.yml , use the text editor of your preference. 
 * Go to this address: https://raw.githubusercontent.com/nasph-io/quickstart/master/docker-compose.yml , save it. 
+* Your folder will be like this:
+
+```
+.
+├── docker-compose.yml
+└── krakend
+    └── krakend.json
+
+1 directory, 2 files
+
+```
+
 * In the terminal window, please execute the following command:
 
 ```
