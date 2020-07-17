@@ -126,53 +126,6 @@ api-gateway_1    | 2020/07/17 22:05:43  DEBUG: creating a new influxdb client
 api-gateway_1    | 2020/07/17 22:05:43  DEBUG: no config for the influxdb client. Aborting
 api-gateway_1    | 2020/07/17 22:05:43  WARNING: influxdb: unable to load custom config
 api-gateway_1    | 2020/07/17 22:05:43  WARNING: opencensus: no extra config defined for the opencensus module
-api-gateway_1    | 2020/07/17 22:05:43  WARNING: building the etcd client: unable to create the etcd client: no config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: no config for the bloomfilter
-api-gateway_1    | 2020/07/17 22:05:43  WARNING: bloomFilter: no config for the bloomfilter
-api-gateway_1    | 2020/07/17 22:05:43  WARNING: no config present for the httpsecure module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector middleware:  no config defined for the module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /micronaut/guess/{{.Number}}
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /micronaut/guess/{{.Number}}
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/micronaut/:number
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/micronaut/:number
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/micronaut/:number
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /ping
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /ping
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/springboot
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/springboot
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/springboot
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /api/TodoItems
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /api/TodoItems
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
 api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
 api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
 api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /api/TodoItems
@@ -195,9 +148,6 @@ dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
 dotnet-micro_1   |       Hosting environment: Production
 dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
 dotnet-micro_1   |       Content root path: /app
-micronaut-sp_1   | Error: Could not find or load main class com.nasph.micronaut.Application
-micronaut-sp_1   | Caused by: java.lang.ClassNotFoundException: com.nasph.micronaut.Application
-nasph_micronaut-sp_1 exited with code 1
 springboot-ms_1  | 
 springboot-ms_1  |   .   ____          _            __ _ _
 springboot-ms_1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
