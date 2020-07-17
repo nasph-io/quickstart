@@ -1,0 +1,125 @@
+{
+    "version": 2,
+    "extra_config": {},
+    "timeout": "3000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "json",
+    "name": "NasphAPIGateway",
+    "endpoints": [{
+            "endpoint": "/api/micronaut/{number}",
+            "extra_config": {
+
+            },
+            "output_encoding": "no-op",
+            "concurrent_calls": 1,
+            "backend": [{
+                "url_pattern": "/micronaut/guess/{number}",
+                "encoding": "no-op",
+                "sd": "static",
+                "extra_config": {
+                    "github.com/devopsfaith/krakend-martian": {
+                        "header.Modifier": {
+                            "scope": ["request", "response"],
+                            "name": "Host",
+                            "value": "micronaut.localhost"
+                        }
+                    }
+                },
+                "method": "GET",
+                "host": [
+                    "http://172.20.0.2"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/api/springboot",
+            "extra_config": {
+
+            },
+            "output_encoding": "no-op",
+            "querystring_params": [
+                "*"
+            ],
+            "concurrent_calls": 1,
+            "backend": [{
+                "url_pattern": "/ping",
+                "encoding": "no-op",
+                "sd": "static",
+                "extra_config": {
+                    "github.com/devopsfaith/krakend-martian": {
+                        "header.Modifier": {
+                            "scope": ["request", "response"],
+                            "name": "Host",
+                            "value": "spring.localhost"
+                        }
+                    }
+                },
+                "method": "GET",
+                "host": [
+                    "http://172.20.0.2"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/api/dotnetcore",
+            "extra_config": {
+
+            },
+            "output_encoding": "no-op",
+            "querystring_params": [
+                "*"
+            ],
+            "concurrent_calls": 1,
+            "backend": [{
+                "url_pattern": "/api/TodoItems",
+                "encoding": "no-op",
+                "sd": "static",
+                "extra_config": {
+                    "github.com/devopsfaith/krakend-martian": {
+                        "header.Modifier": {
+                            "scope": ["request", "response"],
+                            "name": "Host",
+                            "value": "dotnet.localhost"
+                        }
+                    }
+                },
+                "method": "GET",
+                "host": [
+                    "http://172.20.0.2"
+                ],
+                "disable_host_sanitize": false
+            }]
+        },
+        {
+            "endpoint": "/api/dotnetcore",
+            "method": "POST",
+            "extra_config": {
+
+            },
+            "output_encoding": "no-op",
+            "concurrent_calls": 1,
+            "backend": [{
+                "url_pattern": "/api/TodoItems",
+                "encoding": "no-op",
+                "sd": "static",
+                "extra_config": {
+                    "github.com/devopsfaith/krakend-martian": {
+                        "header.Modifier": {
+                            "scope": ["request", "response"],
+                            "name": "Host",
+                            "value": "dotnet.localhost"
+                        }
+                    }
+                },
+                "method": "POST",
+                "host": [
+                    "http://172.20.0.2"
+                ],
+                "disable_host_sanitize": false
+            }]
+        }
+
+    ]
+}
