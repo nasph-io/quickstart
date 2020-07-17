@@ -52,3 +52,20 @@ Nasph combines a super reliable load-balancer/reverse proxy and a blazing fast A
 
 We will run this entire stack in a total auto-scalable way using just regular docker (Swarm). We are planning to use Kubernetes in the future, but there are a lot of other solutions in that path, we do belive that nasph can be as powerful as some of those solutions, but running a much easier way, using the tools that you love. 
 
+## Creating networks
+We might be able to have different networks and communications between our microservices(APIs/Backends), and our API Gateway and external world.
+
+For this basic scenario, let's create a simple bridge network called nasph_network:
+
+```
+docker network create -d bridge nasph-network
+```
+
+## Creating the API Gateway Cluster Environment
+
+We will have the following microservices:
+* springboot - https://hub.docker.com/r/nasph/springboot-microservice
+* dotnetcore - https://hub.docker.com/r/nasph/dotnetcore-microservice
+* micronaut - https://hub.docker.com/r/nasph/micronaut-microservice
+
+Each of those backends above, expose functions through the HTTP methods, in other words, they are APIs. 
