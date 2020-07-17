@@ -100,6 +100,129 @@ docker-compose up
 ```
 On that moment, your machine will connect to the Docker Hub and you will download and execute our official Docker Images that will boot the nasph for you. According to your internet speed, it can take a few minutes, don't worry, the Docker has a very responsive command line, and you will be able to see how the things are progressing. 
 
+## Digging Deeper 
+
+As said before, nasph relies 100% in docker and into opensource projects, so let's take a look in each of the files you had created:
+
+* docker-compose.yml - It defines the whole stack, as you can see we have the load balancer layer defined, the api-gateway and the microservices. We could create this file dinamically as a result of a CI/CD pipeline, in that regards, we can make our devops practices much simpler and focused, not requiring too much complexity for companies and teams that are jumping in this new world.
+* krakend.json - This file defines the APIs's resources and how they will be invoking the existing APIs. In order to edit the API's routes, you can use text editor, or you can use our API editor that is available on the web. 
+
+## Cluster is Up and Running
+
+When you see the initial console's logs like this: 
+
+```
+Creating nasph_external-LB_1 ... done
+Creating nasph_api-gateway_1 ... done
+Recreating nasph_micronaut-sp_1 ... done
+Recreating nasph_dotnet-micro_1 ... done
+Creating nasph_springboot-ms_1  ... done
+Attaching to nasph_external-LB_1, nasph_api-gateway_1, nasph_springboot-ms_1, nasph_micronaut-sp_1, nasph_dotnet-micro_1
+api-gateway_1    | Parsing configuration file: /etc/krakend/krakend.json
+api-gateway_1    | 2020/07/17 22:05:43  ERROR: unable to create the gologging logger: getting the extra config for the krakend-gologging module
+api-gateway_1    | 2020/07/17 22:05:43  ERROR: unable to create the GELF writer: getting the extra config for the krakend-gelf module
+api-gateway_1    | 2020/07/17 22:05:43  INFO: Listening on port: 8080
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: creating a new influxdb client
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: no config for the influxdb client. Aborting
+api-gateway_1    | 2020/07/17 22:05:43  WARNING: influxdb: unable to load custom config
+api-gateway_1    | 2020/07/17 22:05:43  WARNING: opencensus: no extra config defined for the opencensus module
+api-gateway_1    | 2020/07/17 22:05:43  WARNING: building the etcd client: unable to create the etcd client: no config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: no config for the bloomfilter
+api-gateway_1    | 2020/07/17 22:05:43  WARNING: bloomFilter: no config for the bloomfilter
+api-gateway_1    | 2020/07/17 22:05:43  WARNING: no config present for the httpsecure module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector middleware:  no config defined for the module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /micronaut/guess/{{.Number}}
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /micronaut/guess/{{.Number}}
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/micronaut/:number
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/micronaut/:number
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/micronaut/:number
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /ping
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /ping
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/springboot
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/springboot
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/springboot
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /api/TodoItems
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /api/TodoItems
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp consumer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: AMQP: http://172.20.0.2: no amqp producer defined
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /api/TodoItems
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /api/TodoItems
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/dotnetcore
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
+api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-server-handler: no extra config
+api-gateway_1    | 2020/07/17 22:05:43  INFO: registering usage stats for cluster ID 'Zu07Tx5wWffmg+PBDhCcJbWTfpkFUa59076Z+5o2xn0='
+external-LB_1    | time="2020-07-17T22:05:42Z" level=info msg="Configuration loaded from flags."
+dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
+dotnet-micro_1   |       Now listening on: http://0.0.0.0:5000
+dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
+dotnet-micro_1   |       Application started. Press Ctrl+C to shut down.
+dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
+dotnet-micro_1   |       Hosting environment: Production
+dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
+dotnet-micro_1   |       Content root path: /app
+micronaut-sp_1   | Error: Could not find or load main class com.nasph.micronaut.Application
+micronaut-sp_1   | Caused by: java.lang.ClassNotFoundException: com.nasph.micronaut.Application
+nasph_micronaut-sp_1 exited with code 1
+springboot-ms_1  | 
+springboot-ms_1  |   .   ____          _            __ _ _
+springboot-ms_1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+springboot-ms_1  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+springboot-ms_1  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+springboot-ms_1  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+springboot-ms_1  |  =========|_|==============|___/=/_/_/_/
+springboot-ms_1  |  :: Spring Boot ::        (v2.3.0.RELEASE)
+springboot-ms_1  | 
+springboot-ms_1  | 2020-07-17 22:05:48.990  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : Starting SpperformerApplication v0.0.1-SNAPSHOT on c0991e5473e0 with PID 1 (/app.jar started by spring in /)
+springboot-ms_1  | 2020-07-17 22:05:49.002  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : No active profile set, falling back to default profiles: default
+springboot-ms_1  | 2020-07-17 22:05:52.445  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 7780 (http)
+springboot-ms_1  | 2020-07-17 22:05:52.514  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+springboot-ms_1  | 2020-07-17 22:05:52.515  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.35]
+springboot-ms_1  | 2020-07-17 22:05:52.836  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+springboot-ms_1  | 2020-07-17 22:05:52.837  INFO 1 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3650 ms
+springboot-ms_1  | 2020-07-17 22:05:53.737  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+springboot-ms_1  | 2020-07-17 22:05:54.407  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 7780 (http) with context path ''
+springboot-ms_1  | 2020-07-17 22:05:54.433  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : Started SpperformerApplication in 7.196 seconds (JVM running for 10.152)
+```
+
+The cluster is ready to receive API's requests.
+
+
+
 
 
 
