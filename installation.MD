@@ -69,3 +69,25 @@ We will have the following microservices:
 * micronaut - https://hub.docker.com/r/nasph/micronaut-microservice
 
 Each of those backends above, expose functions through the HTTP methods, in other words, they are APIs. 
+
+## Using Docker-Compose
+
+One of our goals is to make nasph extremelly easy to be executed, so, the composition will use just Docker and Docker-Compose. For 90%(or more) of Microservices's and APIs use cases, we are sure that this environment works pretty well. Docker supports a way to isolate different networks, and expose just what we want to. In addition, our API Gateway will be the responsible for expose what shall be consumed by the clients.
+
+Let's to create the docker compose file, follow the instructions bellow:
+
+* Go to the terminal / console 
+* Create a new folder called nasph-quickstart 
+* Inside the created folder, create a file called docker-compose.yml , use the text editor of your preference. 
+* Go to this address: https://raw.githubusercontent.com/nasph-io/quickstart/master/docker-compose.yml , save it. 
+* In the terminal window, please execute the following command:
+
+```
+docker-compose run 
+```
+On that moment, your machine will connect to the Docker Hub and you will download and execute our official Docker Images that will boot the nasph for you. According to your internet speed, it can take a few minutes, don't worry, the Docker has a very responsive command line, and you will be able to see how the things are progressing. 
+
+
+
+
+
