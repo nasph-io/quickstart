@@ -14,9 +14,6 @@ services:
             - "--api.dashboard=true"
             - "--ping"
             - "--providers.docker=true"
-            #- "--providers.docker.endpoint=unix:///var/run/docker.sock"
-            #- "--providers.docker.network=traefik-public"
-            #- "--providers.docker.swarmMode=true"
             - "--entrypoints.web.address=:80"
         ports:
             # The HTTP port
@@ -37,7 +34,6 @@ services:
             - "traefik.enable=true"
             - "traefik.frontend.rule=Host:localhost"
             - "traefik.port=80"
-            #- "traefik.docker.network=nasph-network"
         volumes:
             - ./krakend:/etc/krakend/
     springboot-ms:
@@ -47,14 +43,12 @@ services:
             - nasph-network
         labels:
             - "traefik.http.routers.spring.rule=Host(`spring.localhost`)"
-            #- "traefik.docker.network=traefik-public"
             - "traefik.docker.network=nasph-network"
             - "traefik.port=80"
         depends_on:
             - "api-gateway"
         expose:
             - "7780"
-            #docker-compose up -d --scale spperformer=2
     micronaut-sp:
         # A container that exposes an API to show its IP address
         image: nasph/micronaut-microservice
@@ -80,10 +74,5 @@ services:
             - "traefik.http.routers.dotnet.rule=Host(`dotnet.localhost`)"
             - "traefik.port=80"
             - "traefik.docker.network=nasph-network"
-        #- "traefik.docker.network=traefik-public"
         expose:
             - "5000"
-        #.netcontainer: skalena/dotnetcore-full
-#docker-compose up -d --scale spperformer=2
-
-#docker run --rm -it --name dcv -v $(pwd):/input pmsipilot/docker-compose-viz render -m image docker-compose.yml
