@@ -197,22 +197,123 @@ curl --location --request GET 'http://localhost/api/whoami' \
 ```
 the result will be the following:
 
-```Hostname: 5eab7f3320be
-IP: 127.0.0.1
-IP: 192.168.32.5
-RemoteAddr: 192.168.32.2:42736
-GET / HTTP/1.1
-Host: whoami.docker.localhost
-User-Agent: KrakenD Version 1.1.1
-Accept-Encoding: gzip
-X-Forwarded-For: 192.168.32.3
-X-Forwarded-Host: whoami.docker.localhost
-X-Forwarded-Port: 80
-X-Forwarded-Proto: http
-X-Forwarded-Server: 233b716325c8
-X-Real-Ip: 192.168.32.3 ```
+The result will be the following:
 
-Let's understand the why: 
+    Hostname: 5eab7f3320be
+    IP: 127.0.0.1
+    IP: 192.168.32.5
+    RemoteAddr: 192.168.32.2:42736
+    GET / HTTP/1.1
+    Host: whoami.docker.localhost
+    User-Agent: KrakenD Version 1.1.1
+    Accept-Encoding: gzip
+    X-Forwarded-For: 192.168.32.3
+    X-Forwarded-Host: whoami.docker.localhost
+    X-Forwarded-Port: 80
+    X-Forwarded-Proto: http
+    X-Forwarded-Server: 233b716325c8
+    X-Real-Ip: 192.168.32.3
+
+Let's understand the "Whys": 
+
+1 - Into our docker-compose, we have a service defined like this: 
+
+    whoami:
+    image: containous/whoami
+    depends_on:
+        - "api-gateway" (depending on API Gateway starting first)
+        -labels:
+         -"traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)" 
+
+The last configuration is the kind of very important: This the **"service name / key "** that will act in order to invoke this service (API), in that case, this value shall be passed in a HTTP Header with the value *"whoami.docker.localhost"* 
+
+2 - Our API Gateway configuration, inside the file krakend.json, is exposing this Docker/Microservice as the following: 
+
+    {
+    
+    "endpoint": "/api/whoami",
+    
+    "extra_config": {},
+    
+    "output_encoding": "no-op",
+    
+    "querystring_params": ["*"],
+    
+    "concurrent_calls": 1,
+    
+    "backend": [
+    
+    {
+    
+    "url_pattern": "/",
+    
+    "encoding": "no-op",
+    
+    "sd": "static",
+    
+    "extra_config": {
+    
+    "github.com/devopsfaith/krakend-martian": {
+    
+    "header.Modifier": {
+    
+    "scope": ["request", "response"],
+    
+    "name": "Host",
+    
+    "value": "whoami.docker.localhost"
+    
+    }
+    
+    }
+    
+    },
+    
+    "method": "GET",
+    
+    "host": ["http://192.168.32.2"],
+    
+    "disable_host_sanitize": false
+    
+    }
+    
+    ]
+    
+    }
+
+The JSON above defines the following :
+* The `endpoint` URI / API:  "`/api/whoami`" .
+* This endpoint will call a `backend`:  `HTTP GET http://192.168.32.2` with the `url_pattern` "/" passing a `HTTP Header Host` with the value `whoami.docker.localhost` . In that case, the API Gateway is the one that knows the Backends and Microservices, and not the API requester (client consumers). 
+
+### Executing the calls on the API Gateway 
+
+The `API Gateway` is defined pretty-much similar to the `whoami` service. Check the definition bellow extracted from docker-compose.yml:  
+
+    api-gateway:
+    
+    image: nasph/krakend
+    
+    depends_on:
+    
+    - "reverse-proxy"
+    
+    networks:
+    
+    - nasph-network
+    
+    labels:
+    
+    - traefik.http.routers.api-gateway.rule=Host(`nasph-apigateway`)
+    
+    - traefik.http.services.api-gateway-service.loadbalancer.server.port=8080
+    
+    volumes:
+    
+    - ./krakend:/etc/krakend/
+
+The most important configuration for this moment is the traefik.http.routers.api-gateway.rule=Host(`nasph-apigateway`) , that is the value to header Host when you want to execute the API Gateway. 
+
+
 
 
 
