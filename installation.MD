@@ -1,7 +1,5 @@
 ## nasph Cluster
 
-Nasph combines in one solution a popular reverse proxy / load balancer and a blazing fast API Gateway. Both technologies are opensource and built with Go Lang, for those and many other reasons, we have a very interesting performance. Besides, we are using tools that developers love, such as Docker in order to setup the whole clusters and environment to expose Microservices and APIs in a very high performance way, also taking in consideration aspects of discovery, security, BFF (Backend for Frontend) etc. 
-
 ![nasph basic deployment schema](https://github.com/nasph-io/quickstart/raw/master/nasph_cluster_model.png)
 
 Let's describe the image above in a very quick way, during the documentation, we will be able to cover in depth, each os those:
@@ -377,7 +375,7 @@ The following example in krakend.json file of a the dotnetcore service definitio
 
 # Conclusion
 
-Please, keep posted about our news, and how we will be evolving our documentations, samples, quickstarts, webinars etc.
+Please, follow our news, and how we will be evolving our documentations, samples, quickstarts, webinars etc.
 
 
 
