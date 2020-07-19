@@ -187,8 +187,32 @@ springboot-ms_1  | 2020-07-17 22:05:54.433  INFO 1 --- [           main] c.n.spr
 
 The cluster is ready to receive API's requests.
 
+## Time for Testing 
 
+OK, now we will invoke the first microservice: whoami : 
 
+```
+curl --location --request GET 'http://localhost/api/whoami' \
+--header 'Host: nasph-apigateway'
+```
+the result will be the following:
+
+```Hostname: 5eab7f3320be
+IP: 127.0.0.1
+IP: 192.168.32.5
+RemoteAddr: 192.168.32.2:42736
+GET / HTTP/1.1
+Host: whoami.docker.localhost
+User-Agent: KrakenD Version 1.1.1
+Accept-Encoding: gzip
+X-Forwarded-For: 192.168.32.3
+X-Forwarded-Host: whoami.docker.localhost
+X-Forwarded-Port: 80
+X-Forwarded-Proto: http
+X-Forwarded-Server: 233b716325c8
+X-Real-Ip: 192.168.32.3 ```
+
+Let's understand the why: 
 
 
 
