@@ -1,78 +1,56 @@
-version: "2"
-networks:
-    nasph-network:
-        external: true
-services:
-    external-LB:
-        # The official v2 Traefik docker image
-        image: traefik:v2.2
-        networks:
-            - nasph-network
-        command:
-            - "--api=true"
-            - "--api.insecure=true"
-            - "--api.dashboard=true"
-            - "--ping"
-            - "--providers.docker=true"
-            - "--entrypoints.web.address=:80"
-        ports:
-            # The HTTP port
-            - "80:80"
-            # The Web UI (enabled by --api.insecure=true)
-            - "8080:8080"
-        volumes:
-            # So that Traefik can listen to the Docker events
-            - /var/run/docker.sock:/var/run/docker.sock
+version: "3"
 
-    api-gateway:
-        image: nasph/krakend
-        networks:
-            - nasph-network
-        depends_on:
-            - "external-LB"
-        labels:
-            - "traefik.enable=true"
-            - "traefik.frontend.rule=Host:localhost"
-            - "traefik.port=80"
-        volumes:
-            - ./krakend:/etc/krakend/
-    springboot-ms:
-        # A container that exposes an API to show its IP address
-        image: nasph/springboot-microservice
-        networks:
-            - nasph-network
-        labels:
-            - "traefik.http.routers.spring.rule=Host(`spring.localhost`)"
-            - "traefik.docker.network=nasph-network"
-            - "traefik.port=80"
-        depends_on:
-            - "api-gateway"
-        expose:
-            - "7780"
-    micronaut-sp:
-        # A container that exposes an API to show its IP address
-        image: nasph/micronaut-microservice
-        networks:
-            - nasph-network
-        depends_on:
-            - "api-gateway"
-        labels:
-            - "traefik.http.routers.micronaut.rule=Host(`micronaut.localhost`)"
-            #- "traefik.docker.network=traefik-public"
-            - "traefik.docker.network=nasph-network"
-            - "traefik.port=80"
-        expose:
-            - "7980"
-    dotnet-micro:
-        # A container that exposes an API to show its IP address
-        image: nasph/dotnetcore-microservice
-        networks:
-            - nasph-network
-        depends_on:
-            - "api-gateway"
-        labels:
-            - "traefik.http.routers.dotnet.rule=Host(`dotnet.localhost`)"
-            - "traefik.port=80"
-            - "traefik.docker.network=nasph-network"
-        expose:
-            - "5000"
+networks:
+  nasph-network:
+services:
+  reverse-proxy:
+    image: traefik:v2.2
+    networks:
+      - nasph-network
+    labels:
+      - traefik.http.services.traefik-public.loadbalancer.server.port=8080
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker --entrypoints.http.address=:80 --accesslog
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+  api-gateway:
+    image: nasph/krakend
+    depends_on:
+      - "reverse-proxy"
+    networks:
+      - nasph-network
+    labels:
+      - traefik.http.routers.api-gateway.rule=Host(`nasph-apigateway`)
+      - traefik.http.services.api-gateway-service.loadbalancer.server.port=8080
+    volumes:
+      - ./krakend:/etc/krakend/
+    #ports:
+    # - "7780:7780"
+  dotnet-micro:
+    # A container that exposes an API to show its IP address
+    image: nasph/dotnetcore-microservice
+    networks:
+      - nasph-network
+    depends_on:
+      - "api-gateway"
+    labels:
+      - "traefik.http.routers.dotnet.rule=Host(`dotnet.localhost`)"
+      - "traefik.port=80"
+    expose:
+      - "5000"
+  # ...
+  whoami:
+    # A container that exposes an API to show its IP address
+    image: containous/whoami
+    networks:
+      - nasph-network
+    depends_on:
+      - "api-gateway"
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
