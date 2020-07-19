@@ -314,7 +314,105 @@ The `API Gateway` is defined pretty-much similar to the `whoami` service. Check 
 The most important configuration for this moment is the traefik.http.routers.api-gateway.rule=Host(`nasph-apigateway`) , that is the value to header Host when you want to execute the API Gateway. 
 
 
+## Executing other Services
 
+Inside the docker-compose.yml, you will find also a dotnet-core microservice, that you can invoke accordingly :
+
+Post a new Task :
+
+    curl --location --request POST 'http://localhost/api/dotnetcore' \
+    
+    --header 'Host: nasph-apigateway' \
+    
+    --header 'Content-Type: application/json' \
+    
+    --data-raw '{
+    
+    "name":"review the doc",
+    
+    "isComplete":false
+    
+    }'
+
+The following POST request, will return the created task. 
+
+In order to see the all created tasks, you can call the same api, but using HTTP GET as the method:
+
+    curl --location --request GET 'http://localhost/api/dotnetcore' \
+    
+    --header 'Host: nasph-apigateway'
+
+Result: 
+
+    [{"id":1,"name":"review the doc","isComplete":false}]%
+
+# Troubleshooting
+If you get a 502 HTTP Error - Bad Gateway, please, make sure that the backends in the krakend.json are pointing to the right IP address inside docker. 
+
+The easiest way to see that, is to check the Traefik's log:
+
+    reverse-proxy_1  | 192.168.32.1 - - [19/Jul/2020:05:56:50 +0000] "GET /api/overview HTTP/1.1" 200 435 "-" "-" 464 "api@internal" "-" 0ms
+    reverse-proxy_1  | 192.168.32.1 - - [19/Jul/2020:05:56:55 +0000] "GET /api/overview HTTP/1.1" 200 435 "-" "-" 465 "api@internal" "-" 0ms
+
+In the scenario above, the network attached to this cluster and its containers, is working on the range: 192.168.32.X, in that case, the load-balancer front-end that will hold the whole containers services shall be: `http://192.168.32.2.`
+
+The following example in krakend.json file of a the dotnetcore service definition:
+
+    {
+    
+    "endpoint": "/api/dotnetcore",
+    
+    "extra_config": {},
+    
+    "output_encoding": "no-op",
+    
+    "querystring_params": ["*"],
+    
+    "concurrent_calls": 1,
+    
+    "backend": [
+    
+    {
+    
+    "url_pattern": "/api/TodoItems",
+    
+    "encoding": "no-op",
+    
+    "sd": "static",
+    
+    "extra_config": {
+    
+    "github.com/devopsfaith/krakend-martian": {
+    
+    "header.Modifier": {
+    
+    "scope": ["request", "response"],
+    
+    "name": "Host",
+    
+    "value": "dotnet.localhost"
+    
+    }
+    
+    }
+    
+    },
+    
+    "method": "GET",
+    
+    "host": ["http://192.168.32.2"],
+    
+    "disable_host_sanitize": false
+    
+    }
+    
+    ]
+    
+    }
+
+# Conclusion
+
+Please, keep posted about our news, and how we will be evolving our documentations, samples, quickstarts, webinars etc.
 
 
 
