@@ -4,6 +4,16 @@ Nasph combines in one solution a popular reverse proxy / load balancer and a bla
 
 ![nasph basic deployment schema](https://github.com/nasph-io/quickstart/raw/master/nasph_cluster_model.png)
 
+Let's describe the image above in a very quick way, during the documentation, we will be able to cover in depth, each os those:
+
+1 - Containers : You will have just to design your microservice as containers, we suggest you use Docker. If your Microservice has dependencies of other microservices, such as databases, other services and etc, you have to add this into your docker-compose.yml. 
+
+2 - Each Container will be considered a "Service", as such, it will have a kind of "name"/"alias", that is act as key in order to let the Load Balancer layer to discover how and where to invoke this service.
+
+3 - The Central API Gateway is the lonely part that knows internally how to invoke the services.
+
+4 - Any consumer of API Gateway will use just this component as the entry-point to execute any microservice/API inside your architecture/cluster.
+
 
 ## Required Software
 
