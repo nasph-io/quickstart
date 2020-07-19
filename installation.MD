@@ -128,61 +128,26 @@ As said before, nasph relies 100% in docker and into opensource projects, so let
 When you see the initial console's logs like this: 
 
 ```
-Creating nasph_external-LB_1 ... done
-Creating nasph_api-gateway_1 ... done
-Recreating nasph_micronaut-sp_1 ... done
-Recreating nasph_dotnet-micro_1 ... done
-Creating nasph_springboot-ms_1  ... done
-Attaching to nasph_external-LB_1, nasph_api-gateway_1, nasph_springboot-ms_1, nasph_micronaut-sp_1, nasph_dotnet-micro_1
+Starting nasph-quickstart_reverse-proxy_1 ... done
+Recreating nasph-quickstart_api-gateway_1 ... done
+Recreating nasph-quickstart_dotnet-micro_1 ... done
+Recreating nasph-quickstart_whoami_1       ... done
+Attaching to nasph-quickstart_reverse-proxy_1, nasph-quickstart_api-gateway_1, nasph-quickstart_dotnet-micro_1, nasph-quickstart_whoami_1
+api-gateway_1    | 2020/07/19 04:34:48  ERROR: unable to create the gologging logger: getting the extra config for the krakend-gologging module
+api-gateway_1    | 2020/07/19 04:34:48  ERROR: unable to create the GELF writer: getting the extra config for the krakend-gelf module
+api-gateway_1    | 2020/07/19 04:34:48  INFO: Listening on port: 8080
+api-gateway_1    | 2020/07/19 04:34:48  DEBUG: creating a new influxdb client
+api-gateway_1    | 2020/07/19 04:34:48  DEBUG: no config for the influxdb client. Aborting
+api-gateway_1    | 2020/07/19 04:34:48  WARNING: influxdb: unable to load custom config
+api-gateway_1    | 2020/07/19 04:34:48  WARNING: opencensus: no extra config defined for the opencensus module
+api-gateway_1    | 2020/07/19 04:34:48  WARNING: building the etcd client: unable to create the etcd client: no config
+reverse-proxy_1  | time="2020-07-19T04:34:17Z" level=info msg="Configuration loaded from flags."
 api-gateway_1    | Parsing configuration file: /etc/krakend/krakend.json
-api-gateway_1    | 2020/07/17 22:05:43  ERROR: unable to create the gologging logger: getting the extra config for the krakend-gologging module
-api-gateway_1    | 2020/07/17 22:05:43  ERROR: unable to create the GELF writer: getting the extra config for the krakend-gelf module
-api-gateway_1    | 2020/07/17 22:05:43  INFO: Listening on port: 8080
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: creating a new influxdb client
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: no config for the influxdb client. Aborting
-api-gateway_1    | 2020/07/17 22:05:43  WARNING: influxdb: unable to load custom config
-api-gateway_1    | 2020/07/17 22:05:43  WARNING: opencensus: no extra config defined for the opencensus module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: subscriber (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/subscriber not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: pubsub: publisher (http://172.20.0.2): github.com/devopsfaith/krakend-pubsub/publisher not found in the extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-request-executor: no extra config for backend /api/TodoItems
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for backend /api/TodoItems
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: CEL: no extra config detected for pipe /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: singer disabled for the endpoint /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: lua: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: JOSE: validator disabled for the endpoint /api/dotnetcore
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: botdetector:  no config defined for the module
-api-gateway_1    | 2020/07/17 22:05:43  DEBUG: http-server-handler: no extra config
-api-gateway_1    | 2020/07/17 22:05:43  INFO: registering usage stats for cluster ID 'Zu07Tx5wWffmg+PBDhCcJbWTfpkFUa59076Z+5o2xn0='
-external-LB_1    | time="2020-07-17T22:05:42Z" level=info msg="Configuration loaded from flags."
-dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
-dotnet-micro_1   |       Now listening on: http://0.0.0.0:5000
-dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
-dotnet-micro_1   |       Application started. Press Ctrl+C to shut down.
-dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
-dotnet-micro_1   |       Hosting environment: Production
-dotnet-micro_1   | info: Microsoft.Hosting.Lifetime[0]
-dotnet-micro_1   |       Content root path: /app
-springboot-ms_1  | 
-springboot-ms_1  |   .   ____          _            __ _ _
-springboot-ms_1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-springboot-ms_1  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-springboot-ms_1  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-springboot-ms_1  |   '  |____| .__|_| |_|_| |_\__, | / / / /
-springboot-ms_1  |  =========|_|==============|___/=/_/_/_/
-springboot-ms_1  |  :: Spring Boot ::        (v2.3.0.RELEASE)
-springboot-ms_1  | 
-springboot-ms_1  | 2020-07-17 22:05:48.990  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : Starting SpperformerApplication v0.0.1-SNAPSHOT on c0991e5473e0 with PID 1 (/app.jar started by spring in /)
-springboot-ms_1  | 2020-07-17 22:05:49.002  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : No active profile set, falling back to default profiles: default
-springboot-ms_1  | 2020-07-17 22:05:52.445  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 7780 (http)
-springboot-ms_1  | 2020-07-17 22:05:52.514  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-springboot-ms_1  | 2020-07-17 22:05:52.515  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.35]
-springboot-ms_1  | 2020-07-17 22:05:52.836  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-springboot-ms_1  | 2020-07-17 22:05:52.837  INFO 1 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3650 ms
-springboot-ms_1  | 2020-07-17 22:05:53.737  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-springboot-ms_1  | 2020-07-17 22:05:54.407  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 7780 (http) with context path ''
-springboot-ms_1  | 2020-07-17 22:05:54.433  INFO 1 --- [           main] c.n.springboot.SpperformerApplication    : Started SpperformerApplication in 7.196 seconds (JVM running for 10.152)
+whoami_1         | Starting up on port 80
+api-gateway_1    | 2020/07/19 04:34:48  INFO: registering usage stats for cluster ID '1IK2SSWMoR7RjJwHGlK0NUG+wbfFna/19LVlMc9eQcw='
+reverse-proxy_1  | 192.168.16.1 - - [19/Jul/2020:04:34:19 +0000] "GET /api/overview HTTP/1.1" 200 435 "-" "-" 1 "api@internal" "-" 0ms
+api-gateway_1    | 2020/07/19 04:34:48  DEBUG: no config for the bloomfilter
+reverse-proxy_1  | 192.168.16.1 - - [19/Jul/2020:04:34:22 +0000] "GET /api/overview HTTP/1.1" 200 435 "-" "-" 2 "api@internal" "-" 0ms
 ```
 
 The cluster is ready to receive API's requests.
